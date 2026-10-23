@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Live Tracking - Silent SOS</title>
+
+    <link
+        rel="stylesheet"
+        href="css/style.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="css/tracking.css"
+    >
+
+    <!-- Leaflet Map CSS -->
+    <link
+        rel="stylesheet"
+        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    >
+
+</head>
+
+
+<body>
+
+    <!-- Navigation -->
+
+    <nav class="navbar">
+
+        <div class="logo-area">
+
+            <div class="logo-icon">
+                🛡️
+            </div>
+
+            <div>
+
+                <h2>Silent SOS</h2>
+
+                <span>
+                    Your Safety Companion
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <div class="nav-links">
+
+            <a href="dashboard.html">
+                Dashboard
+            </a>
+
+            <a href="contacts.html">
+                Contacts
+            </a>
+
+            <a
+                href="tracking.html"
+                class="active"
+            >
+                Tracking
+            </a>
+
+            <a href="evidence.html">
+                Evidence
+            </a>
+
+            <a href="settings.html">
+                Settings
+            </a>
+
+            <a href="index.html">
+                Logout
+            </a>
+
+        </div>
+
+    </nav>
+
+
+    <!-- Main -->
+
+    <main class="tracking-container">
+
+
+        <!-- Page Header -->
+
+        <section class="tracking-header">
+
+            <div>
+
+                <p class="small-heading">
+                    LOCATION SAFETY
+                </p>
+
+                <h1>
+                    Live Location
+                </h1>
+
+                <p>
+                    View and share your current location
+                    during an emergency.
+                </p>
+
+            </div>
+
+
+            <div
+                id="trackingStatus"
+                class="tracking-status"
+            >
+
+                <span class="status-dot"></span>
+
+                Tracking Off
+
+            </div>
+
+        </section>
+
+
+        <!-- Control Card -->
+
+        <section class="control-card">
+
+            <div class="control-info">
+
+                <div class="control-icon">
+                    📍
+                </div>
+
+                <div>
+
+                    <h2>
+                        Location Tracking
+                    </h2>
+
+                    <p>
+                        Start tracking to continuously
+                        update your current location.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="tracking-buttons">
+
+                <button
+                    type="button"
+                    id="startTracking"
+                    class="start-button"
+                >
+                    ▶ Start Tracking
+                </button>
+
+
+                <button
+                    type="button"
+                    id="stopTracking"
+                    class="stop-button"
+                    disabled
+                >
+                    ■ Stop Tracking
+                </button>
+
+            </div>
+
+
+            <p
+                id="trackingMessage"
+                class="tracking-message"
+            >
+                Location tracking is currently stopped.
+
+            </p>
+
+        </section>
+
+
+        <!-- Map -->
+
+        <section class="map-section">
+
+            <div class="section-title">
+
+                <div>
+
+                    <h2>
+                        Current Location
+                    </h2>
+
+                    <p>
+                        Your location will appear on the map.
+                    </p>
+
+                </div>
+
+                <span id="lastUpdate">
+                    No location update
+                </span>
+
+            </div>
+
+
+            <div
+                id="map"
+                class="map"
+            ></div>
+
+        </section>
+
+
+        <!-- Location Information -->
+
+        <section class="location-info-section">
+
+
+            <div class="location-card">
+
+                <div class="info-icon">
+                    🌐
+                </div>
+
+                <div>
+
+                    <span>
+                        Latitude
+                    </span>
+
+                    <h3 id="latitude">
+                        --
+                    </h3>
+
+                </div>
+
+            </div>
+
+
+            <div class="location-card">
+
+                <div class="info-icon">
+                    🌐
+                </div>
+
+                <div>
+
+                    <span>
+                        Longitude
+                    </span>
+
+                    <h3 id="longitude">
+                        --
+                    </h3>
+
+                </div>
+
+            </div>
+
+
+            <div class="location-card">
+
+                <div class="info-icon">
+                    🎯
+                </div>
+
+                <div>
+
+                    <span>
+                        Accuracy
+                    </span>
+
+                    <h3 id="accuracy">
+                        --
+                    </h3>
+
+                </div>
+
+            </div>
+
+
+            <div class="location-card">
+
+                <div class="info-icon">
+                    🕒
+                </div>
+
+                <div>
+
+                    <span>
+                        Last Updated
+                    </span>
+
+                    <h3 id="locationTime">
+                        --
+                    </h3>
+
+                </div>
+
+            </div>
+
+
+        </section>
+
+
+        <!-- Information -->
+
+        <section class="location-note">
+
+            <div class="note-icon">
+                ℹ️
+            </div>
+
+            <div>
+
+                <h3>
+                    About Live Location
+                </h3>
+
+                <p>
+                    Location tracking requires your
+                    permission. During an active SOS,
+                    the system can use your location to
+                    help trusted contacts know where
+                    you are.
+                </p>
+
+            </div>
+
+        </section>
+
+
+    </main>
+
+
+    <!-- Footer -->
+
+    <footer class="dashboard-footer">
+
+        <p>
+            © 2026 Silent SOS. Your safety matters.
+        </p>
+
+    </footer>
+
+
+    <!-- Leaflet Map JS -->
+
+    <script
+        src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js">
+    </script>
+
+
+    <script src="js/tracking.js"></script>
+
+</body>
+
+</html>

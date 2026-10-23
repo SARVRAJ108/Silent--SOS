@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Settings - Silent SOS</title>
+
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/settings.css">
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+
+        <div class="logo-area">
+            <div class="logo-icon">🛡️</div>
+
+            <div>
+                <h2>Silent SOS</h2>
+                <span>Emergency Safety System</span>
+            </div>
+        </div>
+
+        <div class="nav-links">
+            <a href="dashboard.html">Dashboard</a>
+            <a href="contacts.html">Contacts</a>
+            <a href="tracking.html">Tracking</a>
+            <a href="evidence.html">Evidence</a>
+            <a href="settings.html" class="active">Settings</a>
+            <a href="index.html">Logout</a>
+        </div>
+
+    </nav>
+
+
+    <!-- Main -->
+    <main class="settings-container">
+
+        <section class="page-header">
+
+            <div>
+                <p class="small-title">SAFETY SETTINGS</p>
+
+                <h1>Settings</h1>
+
+                <p>
+                    Manage your Silent SOS safety preferences.
+                </p>
+            </div>
+
+        </section>
+
+
+        <!-- Profile -->
+        <section class="settings-card">
+
+            <div class="card-title">
+                <div class="setting-icon">👤</div>
+
+                <div>
+                    <h2>Profile</h2>
+                    <p>Your basic account information</p>
+                </div>
+            </div>
+
+            <div class="profile-grid">
+
+                <div class="input-group">
+                    <label>Full Name</label>
+                    <input
+                        type="text"
+                        id="userName"
+                        placeholder="Enter your name"
+                    >
+                </div>
+
+                <div class="input-group">
+                    <label>Email</label>
+                    <input
+                        type="email"
+                        id="userEmail"
+                        placeholder="Enter your email"
+                    >
+                </div>
+
+                <div class="input-group">
+                    <label>Mobile Number</label>
+                    <input
+                        type="tel"
+                        id="userMobile"
+                        placeholder="Enter mobile number"
+                    >
+                </div>
+
+            </div>
+
+            <button id="saveProfileButton" class="primary-button">
+                Save Profile
+            </button>
+
+            <p id="profileStatus" class="status-message"></p>
+
+        </section>
+
+
+        <!-- SOS Settings -->
+        <section class="settings-card">
+
+            <div class="card-title">
+
+                <div class="setting-icon">🚨</div>
+
+                <div>
+                    <h2>SOS Settings</h2>
+                    <p>Control emergency activation preferences</p>
+                </div>
+
+            </div>
+
+
+            <div class="setting-row">
+
+                <div>
+                    <h3>3-Second SOS Hold</h3>
+
+                    <p>
+                        Hold the SOS button for 3 seconds
+                        to prevent accidental activation.
+                    </p>
+                </div>
+
+                <label class="switch">
+                    <input
+                        type="checkbox"
+                        id="sosHoldSetting"
+                        checked
+                    >
+
+                    <span class="slider"></span>
+                </label>
+
+            </div>
+
+
+            <div class="setting-row">
+
+                <div>
+                    <h3>Automatic Evidence Sharing</h3>
+
+                    <p>
+                        Share captured emergency evidence
+                        with selected trusted contacts during SOS.
+                    </p>
+                </div>
+
+                <label class="switch">
+                    <input
+                        type="checkbox"
+                        id="autoEvidenceSetting"
+                        checked
+                    >
+
+                    <span class="slider"></span>
+                </label>
+
+            </div>
+
+        </section>
+
+
+        <!-- Location Settings -->
+        <section class="settings-card">
+
+            <div class="card-title">
+
+                <div class="setting-icon">📍</div>
+
+                <div>
+                    <h2>Location Settings</h2>
+                    <p>Manage emergency location sharing</p>
+                </div>
+
+            </div>
+
+
+            <div class="setting-row">
+
+                <div>
+                    <h3>Live Location Sharing</h3>
+
+                    <p>
+                        Allow your current location to be
+                        shared with selected emergency contacts.
+                    </p>
+                </div>
+
+                <label class="switch">
+                    <input
+                        type="checkbox"
+                        id="locationSetting"
+                        checked
+                    >
+
+                    <span class="slider"></span>
+                </label>
+
+            </div>
+
+
+            <div class="location-info">
+
+                <span>📡</span>
+
+                <div>
+                    <strong>Location Permission</strong>
+
+                    <p>
+                        Browser permission is required
+                        before location sharing can start.
+                    </p>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- Notification Settings -->
+        <section class="settings-card">
+
+            <div class="card-title">
+
+                <div class="setting-icon">🔔</div>
+
+                <div>
+                    <h2>Notifications</h2>
+                    <p>Manage emergency notifications</p>
+                </div>
+
+            </div>
+
+
+            <div class="setting-row">
+
+                <div>
+                    <h3>Emergency Notifications</h3>
+
+                    <p>
+                        Receive notifications when an SOS
+                        event is activated.
+                    </p>
+                </div>
+
+                <label class="switch">
+                    <input
+                        type="checkbox"
+                        id="notificationSetting"
+                        checked
+                    >
+
+                    <span class="slider"></span>
+                </label>
+
+            </div>
+
+
+            <button
+                id="notificationButton"
+                class="secondary-button"
+            >
+                Enable Browser Notifications
+            </button>
+
+            <p id="notificationStatus" class="status-message"></p>
+
+        </section>
+
+
+        <!-- Safety Check -->
+        <section class="settings-card">
+
+            <div class="card-title">
+
+                <div class="setting-icon">⏱️</div>
+
+                <div>
+                    <h2>Safety Check-In</h2>
+                    <p>Optional periodic safety confirmation</p>
+                </div>
+
+            </div>
+
+
+            <div class="setting-row">
+
+                <div>
+                    <h3>Enable Safety Check-In</h3>
+
+                    <p>
+                        Enable a reminder to confirm that
+                        you are safe.
+                    </p>
+                </div>
+
+                <label class="switch">
+                    <input
+                        type="checkbox"
+                        id="checkInSetting"
+                    >
+
+                    <span class="slider"></span>
+                </label>
+
+            </div>
+
+        </section>
+
+
+        <!-- Account -->
+        <section class="settings-card danger-card">
+
+            <div class="card-title">
+
+                <div class="setting-icon">🔐</div>
+
+                <div>
+                    <h2>Account</h2>
+                    <p>Manage your account session</p>
+                </div>
+
+            </div>
+
+
+            <button
+                id="logoutButton"
+                class="logout-button"
+            >
+                Logout
+            </button>
+
+        </section>
+
+
+        <!-- Privacy -->
+        <section class="privacy-note">
+
+            <div class="setting-icon">🛡️</div>
+
+            <div>
+                <h3>Privacy & Safety</h3>
+
+                <p>
+                    Silent SOS uses device permissions for
+                    location, camera and microphone features.
+                    You remain in control of these permissions.
+                </p>
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <script src="js/settings.js"></script>
+
+</body>
+</html>

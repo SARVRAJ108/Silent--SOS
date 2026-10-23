@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Dashboard - Silent SOS</title>
+
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/dashboard.css" />
+  </head>
+
+  <body>
+    <!-- Navigation -->
+    <nav class="navbar">
+      <div class="logo-area">
+        <div class="logo-icon">🛡️</div>
+
+        <div>
+          <h2>Silent SOS</h2>
+          <span>Your Safety Companion</span>
+        </div>
+      </div>
+
+      <div class="nav-links">
+        <a href="dashboard.html" class="active">Dashboard</a>
+        <a href="contacts.html">Contacts</a>
+        <a href="tracking.html">Tracking</a>
+        <a href="evidence.html">Evidence</a>
+        <a href="settings.html">Settings</a>
+        <a href="index.html" id="logoutBtn">Logout</a>
+      </div>
+    </nav>
+
+    <!-- Dashboard -->
+    <main class="dashboard-container">
+      <!-- Welcome -->
+      <section class="welcome-section">
+        <div>
+          <p class="small-heading">WELCOME BACK</p>
+
+          <h1 id="welcomeUser">Stay Safe</h1>
+
+          <p class="welcome-text">Your emergency safety tools are ready.</p>
+        </div>
+
+        <div class="status-badge">
+          <span class="status-dot"></span>
+          System Ready
+        </div>
+      </section>
+
+      <!-- SOS Section -->
+      <section class="sos-section">
+        <div class="sos-content">
+          <p class="sos-label">EMERGENCY ACTION</p>
+
+          <h2>Need Help?</h2>
+
+          <p>
+            Press and hold the SOS button for 3 seconds to activate emergency
+            mode.
+          </p>
+
+          <div class="sos-button-wrapper">
+            <button id="sosButton" class="sos-button">
+              <span class="sos-progress-ring"></span>
+
+              <span class="sos-countdown" id="sosCountdown"> 3 </span>
+
+              <span class="sos-text">SOS</span>
+
+              <span class="sos-hold"> Hold 3 Seconds </span>
+            </button>
+          </div>
+
+          <p id="sosMessage" class="sos-message">
+            Emergency alert is currently inactive.
+          </p>
+        </div>
+      </section>
+
+      <!-- Quick Actions -->
+      <section class="quick-section">
+        <div class="section-heading">
+          <h2>Quick Actions</h2>
+
+          <p>Access your safety tools quickly.</p>
+        </div>
+
+        <div class="quick-grid">
+          <!-- Location -->
+          <a href="tracking.html" class="quick-card">
+            <div class="quick-icon location-icon">📍</div>
+
+            <div>
+              <h3>Live Location</h3>
+
+              <p>Share your current location with trusted contacts.</p>
+            </div>
+
+            <span class="arrow">→</span>
+          </a>
+
+          <!-- Contacts -->
+          <a href="contacts.html" class="quick-card">
+            <div class="quick-icon contact-icon">👥</div>
+
+            <div>
+              <h3>Emergency Contacts</h3>
+
+              <p>Manage your trusted emergency contacts.</p>
+            </div>
+
+            <span class="arrow">→</span>
+          </a>
+
+          <!-- Audio -->
+          <a href="evidence.html" class="quick-card">
+            <div class="quick-icon audio-icon">🎤</div>
+
+            <div>
+              <h3>Audio Evidence</h3>
+
+              <p>Record and send audio evidence to selected contacts.</p>
+            </div>
+
+            <span class="arrow">→</span>
+          </a>
+
+          <!-- Video -->
+          <a href="evidence.html" class="quick-card">
+            <div class="quick-icon video-icon">📹</div>
+
+            <div>
+              <h3>Video Evidence</h3>
+
+              <p>Capture video evidence when needed.</p>
+            </div>
+
+            <span class="arrow">→</span>
+          </a>
+
+          <!-- Photo -->
+          <a href="evidence.html" class="quick-card">
+            <div class="quick-icon photo-icon">📷</div>
+
+            <div>
+              <h3>Photo Evidence</h3>
+
+              <p>Capture and share important photos.</p>
+            </div>
+
+            <span class="arrow">→</span>
+          </a>
+
+          <!-- Safety -->
+          <a href="settings.html" class="quick-card">
+            <div class="quick-icon safety-icon">🛡️</div>
+
+            <div>
+              <h3>Safety Settings</h3>
+
+              <p>Manage your safety preferences.</p>
+            </div>
+
+            <span class="arrow">→</span>
+          </a>
+        </div>
+      </section>
+
+      <!-- SOS Status -->
+      <section class="status-section">
+        <div class="status-card">
+          <div class="status-card-icon">🚨</div>
+
+          <div>
+            <p class="status-title">Emergency Status</p>
+
+            <h3 id="emergencyStatus">No Active Emergency</h3>
+
+            <p id="statusDescription">
+              You are currently safe. SOS alerts are inactive.
+            </p>
+
+            <button id="safeButton" class="safe-button">I'm Safe</button>
+          </div>
+        </div>
+
+        <div class="status-card">
+          <div class="status-card-icon">📍</div>
+
+          <div>
+            <p class="status-title">Location Status</p>
+
+            <h3 id="locationStatus">Location Not Shared</h3>
+
+            <p>Location sharing will start when emergency mode is activated.</p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="dashboard-footer">
+      <p>© 2026 Silent SOS. Your safety matters.</p>
+    </footer>
+
+    <script src="js/dashboard.js"></script>
+  </body>
+</html>

@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Evidence - Silent SOS</title>
+
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/evidence.css" />
+  </head>
+
+  <body>
+    <!-- Navbar -->
+    <nav class="navbar">
+      <div class="logo-area">
+        <div class="logo-icon">🛡️</div>
+
+        <div>
+          <h2>Silent SOS</h2>
+          <span>Emergency Safety System</span>
+        </div>
+      </div>
+
+      <div class="nav-links">
+        <a href="dashboard.html">Dashboard</a>
+        <a href="contacts.html">Contacts</a>
+        <a href="tracking.html">Tracking</a>
+        <a href="evidence.html" class="active">Evidence</a>
+        <a href="settings.html">Settings</a>
+        <a href="index.html">Logout</a>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="evidence-container">
+      <section class="page-header">
+        <div>
+          <p class="small-title">SAFETY EVIDENCE</p>
+
+          <h1>Capture & Send Evidence</h1>
+
+          <p>
+            Record audio, video or photo evidence and send it to your trusted
+            emergency contacts.
+          </p>
+        </div>
+
+        <div class="security-badge">🔒 Private & Secure</div>
+      </section>
+
+      <!-- Evidence Options -->
+      <section class="evidence-options">
+        <!-- Audio -->
+        <div class="evidence-card">
+          <div class="evidence-icon">🎙️</div>
+
+          <h2>Audio</h2>
+
+          <p>Record audio evidence or upload an existing audio file.</p>
+
+          <button id="audioButton" class="evidence-button">Start Audio</button>
+
+          <input type="file" id="audioUpload" accept="audio/*" hidden />
+
+          <button
+            type="button"
+            id="audioUploadButton"
+            class="evidence-button upload-button"
+          >
+            📁 Upload Audio
+          </button>
+
+          <div id="audioStatus" class="record-status">Ready to record</div>
+        </div>
+
+        <!-- Video -->
+        <div class="evidence-card">
+          <div class="evidence-icon">🎥</div>
+
+          <h2>Video</h2>
+
+          <p>Record video evidence or upload an existing video file.</p>
+
+          <button id="videoButton" class="evidence-button">Start Video</button>
+
+          <input type="file" id="videoUpload" accept="video/*" hidden />
+
+          <button
+            type="button"
+            id="videoUploadButton"
+            class="evidence-button upload-button"
+          >
+            📁 Upload Video
+          </button>
+
+          <div id="videoStatus" class="record-status">Ready to record</div>
+        </div>
+
+        <!-- Photo -->
+        <div class="evidence-card">
+          <div class="evidence-icon">📷</div>
+
+          <h2>Photo</h2>
+
+          <p>Capture a photo or upload an existing image.</p>
+
+          <button id="photoButton" class="evidence-button">Open Camera</button>
+
+          <input type="file" id="photoUpload" accept="image/*" hidden />
+
+          <button
+            type="button"
+            id="photoUploadButton"
+            class="evidence-button upload-button"
+          >
+            📁 Upload Photo
+          </button>
+
+          <div id="photoStatus" class="record-status">Ready to capture</div>
+        </div>
+      </section>
+
+      <!-- Camera Preview -->
+      <section class="preview-section">
+        <div class="section-heading">
+          <h2>Preview</h2>
+
+          <span id="previewStatus"> No evidence captured </span>
+        </div>
+
+        <div class="preview-box">
+          <video id="cameraPreview" autoplay muted></video>
+
+          <img id="photoPreview" alt="Captured photo" />
+
+          <audio id="audioPreview" controls></audio>
+
+          <div id="emptyPreview">
+            <div class="preview-icon">📁</div>
+
+            <p>Your captured evidence will appear here.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Selected Contacts -->
+      <section class="send-section">
+        <div class="section-heading">
+          <div>
+            <h2>Send to Contacts</h2>
+
+            <p>Select one or more emergency contacts.</p>
+          </div>
+
+          <span id="selectedCount"> 0 Selected </span>
+        </div>
+
+        <div id="contactList" class="contact-list">
+          <div class="contact-empty">
+            <span>👥</span>
+
+            <p>No emergency contacts available.</p>
+
+            <a href="contacts.html"> Add Emergency Contacts </a>
+          </div>
+        </div>
+
+        <button id="sendEvidenceButton" class="send-button">
+          🚨 Send Evidence to Contacts
+        </button>
+
+        <p id="sendStatus" class="send-status"></p>
+      </section>
+
+      <!-- Saved Evidence -->
+      <section class="saved-evidence-section">
+        <div class="section-heading">
+          <div>
+            <h2>Saved Evidence</h2>
+
+            <p>Your previously captured evidence is stored securely.</p>
+          </div>
+
+          <span id="evidenceCount"> 0 Evidence </span>
+        </div>
+
+        <div id="savedEvidenceList" class="saved-evidence-list">
+          <div class="evidence-empty">
+            <div class="preview-icon">📁</div>
+
+            <p>No saved evidence yet.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Safety Note -->
+      <section class="safety-note">
+        <div class="note-icon">🛡️</div>
+
+        <div>
+          <h3>Your Safety & Privacy</h3>
+
+          <p>
+            Camera and microphone access requires your permission. Evidence will
+            only be shared with the contacts you select.
+          </p>
+        </div>
+      </section>
+    </main>
+
+    <!-- JavaScript -->
+    <script src="js/evidence.js"></script>
+  </body>
+</html>

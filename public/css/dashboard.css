@@ -1,0 +1,598 @@
+/* ================================
+   Dashboard
+================================ */
+
+.dashboard-container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 45px 0;
+}
+
+
+/* ================================
+   Welcome Section
+================================ */
+
+.welcome-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 35px;
+}
+
+.small-heading {
+    color: #ff3b4f;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    margin-bottom: 8px;
+}
+
+.welcome-section h1 {
+    font-size: 38px;
+    margin-bottom: 8px;
+}
+
+.welcome-section h1 span {
+    color: #ff3b4f;
+}
+
+.welcome-text {
+    color: #9ca8b8;
+    font-size: 16px;
+}
+
+.status-badge {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    padding: 10px 16px;
+
+    background: #101d2d;
+    border: 1px solid #23344a;
+    border-radius: 30px;
+
+    color: #c8d1dc;
+    font-size: 14px;
+}
+
+.status-dot {
+    width: 9px;
+    height: 9px;
+
+    background: #35d07f;
+    border-radius: 50%;
+}
+
+
+/* ================================
+   SOS Section
+================================ */
+
+.sos-section {
+    background: linear-gradient(
+        135deg,
+        #111d2d,
+        #0a1422
+    );
+
+    border: 1px solid #26364a;
+    border-radius: 20px;
+
+    padding: 45px 20px;
+
+    text-align: center;
+
+    margin-bottom: 45px;
+}
+
+.sos-label {
+    color: #ff3b4f;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 2px;
+}
+
+.sos-content h2 {
+    font-size: 30px;
+    margin: 10px 0;
+}
+
+.sos-content > p:not(.sos-label):not(.sos-message) {
+    color: #9ca8b8;
+    max-width: 500px;
+    margin: 0 auto 25px;
+    line-height: 1.6;
+}
+
+
+/* ================================
+   SOS Button
+================================ */
+
+.sos-button-wrapper {
+    display: flex;
+    justify-content: center;
+    margin: 25px 0;
+}
+
+.sos-button {
+    width: 170px;
+    height: 170px;
+
+    border-radius: 50%;
+    border: 8px solid #321923;
+
+    background: #d9283f;
+
+    color: white;
+
+    cursor: pointer;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    box-shadow:
+        0 0 0 8px #17202c,
+        0 12px 35px rgba(0, 0, 0, 0.4);
+
+    transition: transform 0.2s ease;
+}
+
+.sos-button:hover {
+    transform: scale(1.04);
+}
+
+.sos-button:active {
+    transform: scale(0.97);
+}
+
+.sos-text {
+    font-size: 42px;
+    font-weight: 800;
+}
+
+.sos-hold {
+    font-size: 13px;
+    margin-top: 5px;
+}
+
+.sos-message {
+    color: #8795a7;
+    font-size: 14px;
+}
+
+
+/* ================================
+   Quick Actions
+================================ */
+
+.quick-section {
+    margin-bottom: 45px;
+}
+
+.section-heading {
+    margin-bottom: 20px;
+}
+
+.section-heading h2 {
+    font-size: 25px;
+    margin-bottom: 5px;
+}
+
+.section-heading p {
+    color: #8795a7;
+}
+
+
+.quick-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 18px;
+}
+
+
+.quick-card {
+    position: relative;
+
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
+
+    padding: 22px;
+
+    background: #0d1928;
+
+    border: 1px solid #213249;
+    border-radius: 15px;
+
+    color: white;
+    text-decoration: none;
+
+    transition:
+        transform 0.25s ease,
+        border-color 0.25s ease;
+}
+
+.quick-card:hover {
+    transform: translateY(-4px);
+    border-color: #ff3b4f;
+}
+
+.quick-icon {
+    min-width: 48px;
+    height: 48px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 12px;
+
+    background: #182638;
+
+    font-size: 22px;
+}
+
+.quick-card h3 {
+    font-size: 17px;
+    margin-bottom: 6px;
+}
+
+.quick-card p {
+    color: #8492a4;
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+.arrow {
+    position: absolute;
+
+    right: 18px;
+    bottom: 17px;
+
+    color: #ff3b4f;
+    font-size: 20px;
+}
+
+
+/* ================================
+   Status Cards
+================================ */
+
+.status-section {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, 1fr);
+
+    gap: 20px;
+
+    margin-bottom: 20px;
+}
+
+.status-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+
+    padding: 22px;
+
+    background: #0d1928;
+
+    border: 1px solid #213249;
+    border-radius: 15px;
+}
+
+.status-card-icon {
+    width: 48px;
+    height: 48px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #182638;
+    border-radius: 12px;
+
+    font-size: 21px;
+}
+
+.status-title {
+    color: #8795a7;
+    font-size: 13px;
+    margin-bottom: 5px;
+}
+
+.status-card h3 {
+    font-size: 17px;
+    margin-bottom: 5px;
+}
+
+.status-card div:last-child > p:last-child {
+    color: #738195;
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+
+/* ================================
+   Footer
+================================ */
+
+.dashboard-footer {
+    text-align: center;
+
+    padding: 25px;
+
+    border-top: 1px solid #172638;
+
+    color: #667487;
+
+    font-size: 13px;
+}
+
+
+/* ================================
+   Responsive
+================================ */
+
+@media (max-width: 900px) {
+
+    .quick-grid {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+    .status-section {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+
+@media (max-width: 650px) {
+
+    .dashboard-container {
+        width: 92%;
+        padding: 30px 0;
+    }
+
+    .welcome-section {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .welcome-section h1 {
+        font-size: 30px;
+    }
+
+    .quick-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .sos-button {
+        width: 145px;
+        height: 145px;
+    }
+
+    .sos-text {
+        font-size: 36px;
+    }
+
+}
+
+
+.safe-button {
+    margin-top: 20px;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 10px;
+    background: #22c55e;
+    color: white;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.safe-button:hover {
+    transform: translateY(-2px);
+    opacity: 0.9;
+}
+
+.safe-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+
+/* =====================================================
+   SOS 3 SECOND HOLD ANIMATION
+===================================================== */
+
+.sos-button {
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Progress ring */
+
+.sos-progress-ring {
+    position: absolute;
+
+    width: 145px;
+    height: 145px;
+
+    border-radius: 50%;
+
+    border: 5px solid rgba(255, 255, 255, 0.25);
+
+    border-top-color: #ffffff;
+
+    transform: rotate(-90deg) scale(0);
+
+    opacity: 0;
+
+    pointer-events: none;
+}
+
+
+/* Active holding state */
+
+.sos-button.sos-holding {
+    transform: scale(0.96);
+
+    box-shadow:
+        0 0 0 8px rgba(255, 80, 80, 0.15),
+        0 0 35px rgba(255, 80, 80, 0.6);
+}
+
+
+Ring animation
+
+.sos-button.sos-holding .sos-progress-ring {
+
+    opacity: 1;
+
+    transform: rotate(-90deg) scale(1);
+
+    animation:
+        sosRingProgress 3s linear forwards;
+
+}
+
+
+/* Countdown number */
+
+.sos-countdown {
+
+    position: absolute;
+
+    font-size: 42px;
+
+    font-weight: 800;
+
+    color: white;
+
+    opacity: 0;
+
+    z-index: 5;
+
+    pointer-events: none;
+}
+
+
+/* Show countdown while holding */
+
+.sos-button.sos-holding .sos-countdown {
+
+    opacity: 1;
+
+    animation: sosCountdownPulse 1s ease-in-out infinite;
+
+}
+
+
+/* Hide normal text while holding */
+
+.sos-button.sos-holding .sos-text,
+.sos-button.sos-holding .sos-hold {
+
+    opacity: 0.25;
+
+}
+
+
+/* Progress ring */
+
+@keyframes sosRingProgress {
+
+    from {
+
+        clip-path: inset(0 0 0 50%);
+
+    }
+
+    50% {
+
+        clip-path: inset(0 0 0 0%);
+
+    }
+
+    to {
+
+        clip-path: inset(0 0 0 0%);
+
+    }
+
+}
+
+
+/* Countdown pulse */
+
+@keyframes sosCountdownPulse {
+
+    0% {
+
+        transform: scale(1);
+
+    }
+
+    50% {
+
+        transform: scale(1.15);
+
+    }
+
+    100% {
+
+        transform: scale(1);
+
+    }
+
+}
+
+
+/* Activated */
+
+.sos-button.sos-active {
+
+    animation: sosActivatedPulse 1s ease-in-out infinite;
+
+}
+
+
+@keyframes sosActivatedPulse {
+
+    0% {
+
+        box-shadow:
+            0 0 0 0 rgba(255, 70, 70, 0.6);
+
+    }
+
+    50% {
+
+        box-shadow:
+            0 0 0 15px rgba(255, 70, 70, 0.15);
+
+    }
+
+    100% {
+
+        box-shadow:
+            0 0 0 0 rgba(255, 70, 70, 0);
+
+    }
+
+}

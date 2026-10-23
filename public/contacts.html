@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Emergency Contacts - Silent SOS</title>
+
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/contacts.css">
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+
+        <div class="logo-area">
+            <div class="logo-icon">🛡️</div>
+
+            <div>
+                <h2>Silent SOS</h2>
+                <span>Your Safety Companion</span>
+            </div>
+        </div>
+
+        <div class="nav-links">
+            <a href="dashboard.html">Dashboard</a>
+            <a href="contacts.html" class="active">Contacts</a>
+            <a href="tracking.html">Tracking</a>
+            <a href="evidence.html">Evidence</a>
+            <a href="settings.html">Settings</a>
+            <a href="index.html">Logout</a>
+        </div>
+
+    </nav>
+
+
+    <!-- Main Content -->
+    <main class="contacts-container">
+
+        <!-- Page Heading -->
+        <section class="contacts-header">
+
+            <div>
+                <p class="small-heading">SAFETY NETWORK</p>
+
+                <h1>Emergency Contacts</h1>
+
+                <p>
+                    Add people you trust. They can receive your
+                    SOS alerts, location and shared evidence.
+                </p>
+            </div>
+
+            <div class="contact-count">
+                <span id="contactCount">0</span>
+                <small>Contacts</small>
+            </div>
+
+        </section>
+
+
+        <!-- Add Contact Buttons -->
+        <section class="add-contact-section">
+
+            <div class="add-contact-card">
+
+                <div class="add-icon">
+                    👤
+                </div>
+
+                <div class="add-content">
+
+                    <h2>Add a Contact</h2>
+
+                    <p>
+                        Add an emergency contact manually or
+                        choose one from your phone contacts.
+                    </p>
+
+                    <div class="add-buttons">
+
+                        <button
+                            type="button"
+                            id="manualAddButton"
+                            class="primary-button"
+                        >
+                            + Add Manually
+                        </button>
+
+                       
+                    </div>
+
+                    <p id="contactPickerMessage" class="picker-message"></p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- Search -->
+        <section class="search-section">
+
+            <div class="search-box">
+
+                <span>🔍</span>
+
+                <input
+                    type="text"
+                    id="searchContact"
+                    placeholder="Search contacts..."
+                >
+
+            </div>
+
+        </section>
+
+
+        <!-- Contact List -->
+        <section class="contact-list-section">
+
+            <div class="list-heading">
+
+                <div>
+                    <h2>Your Trusted Contacts</h2>
+
+                    <p>
+                        Select contacts who should receive
+                        emergency alerts.
+                    </p>
+                </div>
+
+                <button
+                    type="button"
+                    id="selectAllButton"
+                    class="select-all-button"
+                >
+                    Select All
+                </button>
+
+            </div>
+
+
+            <div id="contactList" class="contact-list">
+
+                <!-- Contacts will appear here -->
+
+            </div>
+
+
+            <!-- Empty State -->
+            <div
+                id="emptyContacts"
+                class="empty-contacts"
+            >
+
+                <div class="empty-icon">
+                    👥
+                </div>
+
+                <h3>No Emergency Contacts Yet</h3>
+
+                <p>
+                    Add your first trusted contact to use
+                    emergency alerts.
+                </p>
+
+                <button
+                    type="button"
+                    id="emptyAddButton"
+                    class="primary-button"
+                >
+                    + Add Emergency Contact
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- Selected Contact Information -->
+        <section class="selected-section">
+
+            <div class="selected-card">
+
+                <div class="selected-icon">
+                    ✓
+                </div>
+
+                <div>
+
+                    <h3>
+                        <span id="selectedCount">0</span>
+                        contacts selected for SOS
+                    </h3>
+
+                    <p>
+                        Selected contacts will receive your
+                        emergency alert and shared safety data.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- Add Contact Modal -->
+    <div
+        id="contactModal"
+        class="modal-overlay"
+    >
+
+        <div class="contact-modal">
+
+            <button
+                type="button"
+                id="closeModal"
+                class="close-modal"
+            >
+                ×
+            </button>
+
+            <p class="small-heading">NEW CONTACT</p>
+
+            <h2>Add Emergency Contact</h2>
+
+            <p class="modal-description">
+                Enter the details of someone you trust.
+            </p>
+
+
+            <form id="contactForm">
+
+                <div class="form-group">
+
+                    <label for="contactName">
+                        Full Name
+                    </label>
+
+                    <input
+                        type="text"
+                        id="contactName"
+                        placeholder="Enter full name"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="contactPhone">
+                        Mobile Number
+                    </label>
+
+                    <input
+                        type="tel"
+                        id="contactPhone"
+                        placeholder="Enter mobile number"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="contactEmail">
+                        Email Address
+                    </label>
+
+                    <input
+                        type="email"
+                        id="contactEmail"
+                        placeholder="Enter email address"
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="contactRelation">
+                        Relationship
+                    </label>
+
+                    <input
+                        type="text"
+                        id="contactRelation"
+                        placeholder="Example: Father, Friend, Brother"
+                    >
+
+                </div>
+
+
+                <label class="emergency-checkbox">
+
+                    <input
+                        type="checkbox"
+                        id="contactSelected"
+                        checked
+                    >
+
+                    <span>
+                        Include this contact in SOS alerts
+                    </span>
+
+                </label>
+
+
+                <div class="modal-buttons">
+
+                    <button
+                        type="button"
+                        id="cancelModal"
+                        class="cancel-button"
+                    >
+                        Cancel
+                    </button>
+
+                    <button
+                        type="submit"
+                        class="primary-button"
+                    >
+                        Save Contact
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+    <script src="js/contacts.js"></script>
+
+</body>
+</html>

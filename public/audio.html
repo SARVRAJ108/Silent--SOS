@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Audio Evidence - Silent SOS</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <header>
+
+        <h2>Silent SOS</h2>
+
+        <nav>
+            <a href="/dashboard.html">Dashboard</a>
+            <a href="/contacts.html">Contacts</a>
+            <a href="/tracking.html">Tracking</a>
+            <a href="/audio.html">Audio Evidence</a>
+            <a href="/settings.html">Settings</a>
+            <a href="#" id="logoutBtn">Logout</a>
+        </nav>
+
+    </header>
+
+
+    <main>
+
+        <h1>Audio Evidence</h1>
+
+        <p>
+            Record audio evidence when you need to document an emergency.
+        </p>
+
+
+        <section>
+
+            <button id="startRecording">
+                🎙️ Start Recording
+            </button>
+
+            <button id="stopRecording" disabled>
+                ⏹️ Stop Recording
+            </button>
+
+        </section>
+
+
+        <p id="recordingStatus">
+            Recording is not started.
+        </p>
+
+
+        <audio
+            id="audioPreview"
+            controls
+            style="display: none;">
+        </audio>
+
+
+        <br>
+
+
+        <button
+            id="saveEvidence"
+            disabled>
+            💾 Save Evidence
+        </button>
+
+
+    </main>
+
+
+    <script src="audio.js"></script>
+
+</body>
+
+</html>
