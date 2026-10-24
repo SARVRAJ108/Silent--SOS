@@ -89,23 +89,37 @@ function uploadToCloudinary(buffer, mimetype) {
 
 async function sendEmail(to, subject, text) {
     if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
-        console.log("Email configuration missing. Email not sent.");
-        return;
+        console.error("Email failed: EMAIL_USER or EMAIL_PASS is missing.");
+        return false;
     }
 
     if (!to) {
-        return;
+        console.error("Email failed: recipient address is missing.");
+        return false;
     }
 
     try {
-        await transporter.sendMail({
+        const info = await transporter.sendMail({
             from: process.env.EMAIL_USER,
             to,
             subject,
             text,
         });
+
+        console.log("Email accepted by mail server:", {
+            to,
+            messageId: info.messageId,
+        });
+
+        return true;
     } catch (error) {
-        console.error("Email sending failed:", error.message);
+        console.error("Email sending failed:", {
+            to,
+            code: error.code,
+            message: error.message,
+        });
+
+        return false;
     }
 }
 
