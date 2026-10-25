@@ -3,7 +3,7 @@ require("dotenv").config();
 const express = require("express");
 const path = require("path");
 const bcrypt = require("bcrypt");
-const nodemailer = require("nodemailer");
+const { Resend } = require("resend");
 const multer = require("multer");
 const cloudinary = require("cloudinary").v2;
 const  pool  = require("./db");
@@ -42,83 +42,42 @@ const upload = multer({
 });
 
 // =========================
-// EMAIL CONFIGURATION
+// RESEND EMAIL CONFIGURATION
 // =========================
 
-const transporter = nodemailer.createTransport({
-    service: "gmail",
-    auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS,
-    },
-});
-
-// =========================
-// HELPER: CLOUDINARY UPLOAD
-// =========================
-
-function uploadToCloudinary(buffer, mimetype) {
-    return new Promise((resolve, reject) => {
-        const resourceType = mimetype.startsWith("image/")
-            ? "image"
-            : mimetype.startsWith("video/")
-                ? "video"
-                : "raw";
-
-        const stream = cloudinary.uploader.upload_stream(
-            {
-                folder: "silent-sos",
-                resource_type: resourceType,
-            },
-            (error, result) => {
-                if (error) {
-                    return reject(error);
-                }
-
-                resolve(result);
-            }
-        );
-
-        stream.end(buffer);
-    });
-}
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 // =========================
 // HELPER: SEND EMAIL
 // =========================
 
 async function sendEmail(to, subject, text) {
-    if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
-        console.error("Email failed: EMAIL_USER or EMAIL_PASS is missing.");
+    if (!process.env.RESEND_API_KEY) {
+        console.error("RESEND_API_KEY environment variable missing.");
         return false;
     }
 
     if (!to) {
-        console.error("Email failed: recipient address is missing.");
         return false;
     }
 
     try {
-        const info = await transporter.sendMail({
-            from: process.env.EMAIL_USER,
-            to,
+        const { data, error } = await resend.emails.send({
+            from: process.env.RESEND_FROM_EMAIL,
+            to: [to],
             subject,
             text,
         });
 
-        console.log("Email accepted by mail server:", {
-            to,
-            messageId: info.messageId,
-        });
+        if (error) {
+            console.error("Resend email failed:", error);
+            return false;
+        }
 
+        console.log("Email sent successfully:", data?.id);
         return true;
     } catch (error) {
-        console.error("Email sending failed:", {
-            to,
-            code: error.code,
-            message: error.message,
-        });
-
+        console.error("Email sending failed:", error.message);
         return false;
     }
 }
