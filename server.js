@@ -58,6 +58,18 @@ const transporter = nodemailer.createTransport({
     socketTimeout: 20000,
 });
 
+transporter.verify()
+    .then(() => {
+        console.log("Gmail SMTP connection successful!");
+    })
+    .catch((error) => {
+        console.error("Gmail SMTP verification failed:", {
+            code: error.code,
+            message: error.message,
+            command: error.command
+        });
+    });
+
 
 // =========================
 // HELPER: SEND EMAIL
