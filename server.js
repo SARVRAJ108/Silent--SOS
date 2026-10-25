@@ -3,7 +3,7 @@ require("dotenv").config();
 const express = require("express");
 const path = require("path");
 const bcrypt = require("bcrypt");
-const { Resend } = require("resend");
+const nodemailer = require("nodemailer");
 const multer = require("multer");
 const cloudinary = require("cloudinary").v2;
 const  pool  = require("./db");
@@ -42,42 +42,50 @@ const upload = multer({
 });
 
 // =========================
-// RESEND EMAIL CONFIGURATION
+// NODEMAILER EMAIL CONFIGURATION
 // =========================
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+const transporter = nodemailer.createTransport({
+    host: "smtp.gmail.com",
+    port: 465,
+    secure: true,
+    auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS,
+    },
+    connectionTimeout: 15000,
+    greetingTimeout: 15000,
+    socketTimeout: 20000,
+});
+
 
 // =========================
 // HELPER: SEND EMAIL
 // =========================
 
 async function sendEmail(to, subject, text) {
-    if (!process.env.RESEND_API_KEY) {
-        console.error("RESEND_API_KEY environment variable missing.");
+    if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
+        console.error("Gmail environment variables are missing.");
         return false;
     }
 
     if (!to) {
+        console.error("Recipient email is missing.");
         return false;
     }
 
     try {
-        const { data, error } = await resend.emails.send({
-            from: process.env.RESEND_FROM_EMAIL,
-            to: [to],
+        const info = await transporter.sendMail({
+            from: `"Silent SOS" <${process.env.EMAIL_USER}>`,
+            to,
             subject,
             text,
         });
 
-        if (error) {
-            console.error("Resend email failed:", error);
-            return false;
-        }
-
-        console.log("Email sent successfully:", data?.id);
+        console.log("Email accepted by SMTP server:", info.messageId);
         return true;
     } catch (error) {
-        console.error("Email sending failed:", error.message);
+        console.error("Nodemailer error:", error.code, error.message);
         return false;
     }
 }
