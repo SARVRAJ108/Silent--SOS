@@ -616,12 +616,17 @@ app.post(
 
             const type = evidence_type ||
                 (req.file.mimetype.startsWith("image/")
-                    ? "image"
-                    : req.file.mimetype.startsWith("video/")
+                    ? "photo"
+                    : 
+                req.file.mimetype.startsWith("video/")
                         ? "video"
-                        : "file");
+                        : 
+                req.file.mimetype.startsWith("audio/")
+                             ? "video"
+                             : "file");
 
-            const result = await pool.query(
+            
+                const result = await pool.query(
                 `INSERT INTO evidence
                     (user_id, alert_id, evidence_type, file_path)
                  VALUES ($1, $2, $3, $4)

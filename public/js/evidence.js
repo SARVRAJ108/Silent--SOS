@@ -925,91 +925,47 @@ sendEvidenceButton.addEventListener(
             sendStatus.textContent =
                 "Uploading evidence...";
 
+/* =========================
+   FORM DATA
+========================= */
 
-            /* =========================
-               FORM DATA
-            ========================= */
+const formData = new FormData();
 
-            const formData =
-                new FormData();
+formData.append(
+    "file",
+    currentEvidence.blob,
+    getEvidenceFileName(currentEvidence.type)
+);
 
+formData.append(
+    "user_id",
+    String(user.id)
+);
 
-            formData.append(
+formData.append(
+    "evidence_type",
+    currentEvidence.type
+);
 
-                "file",
+/* =========================
+   ACTIVE SOS ALERT
+========================= */
 
-                currentEvidence.blob,
+if (alertId) {
+    formData.append("alert_id", String(alertId));
+}
 
-                getEvidenceFileName(
-                    currentEvidence.type
-                )
+/* =========================
+   SELECTED CONTACT IDs
+========================= */
 
-            );
+const selectedContactIds = Array.from(selected)
+    .map(checkbox => Number(checkbox.value));
 
-
-            formData.append(
-
-                "userId",
-
-                String(user.id)
-
-            );
-
-
-            formData.append
-
-                ("evidenceType",
-
-                currentEvidence.type);
-
-                if(alertId)
-                {formData.append("alert_id",
-                    String(alertId)
-                );}
-
-            
-
-
-            /* =========================
-               SELECTED CONTACT IDs
-            ========================= */
-
-            const selectedContactIds =
-                Array.from(selected)
-                    .map(
-                        checkbox =>
-                            Number(
-                                checkbox.value
-                            )
-                    );
-
-
-            formData.append(
-
-                "contactIds",
-
-                JSON.stringify(
-                    selectedContactIds
-                )
-
-            );
-
-
-            /* =========================
-               ALERT ID
-            ========================= */
-
-            if (alertId) {
-
-                formData.append(
-
-                    "alertId",
-
-                    alertId
-
-                );
-
-            }
+formData.append(
+    "contactIds",
+    JSON.stringify(selectedContactIds)
+);
 
 
             /* =========================
@@ -1059,7 +1015,7 @@ sendEvidenceButton.addEventListener(
 
             sendStatus.textContent =
 
-                `Evidence saved successfully. Evidence ID: ${data.evidenceId}`;
+                `Evidence saved successfully. Evidence ID: ${data.evidence.id}`;
 
 
             console.log(
