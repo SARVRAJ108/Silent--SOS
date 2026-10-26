@@ -30,6 +30,7 @@ cloudinary.config({
     api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
+
 // =========================
 // MULTER CONFIGURATION
 // =========================
@@ -40,6 +41,34 @@ const upload = multer({
         fileSize: 10 * 1024 * 1024,
     },
 });
+
+
+function uploadToCloudinary(buffer, mimetype) {
+return new Promise((resolve, reject) => {
+const resourceType = mimetype.startsWith("image/")
+? "image"
+: mimetype.startsWith("video/")
+? "video"
+: "raw";
+
+    const stream = cloudinary.uploader.upload_stream(
+        {
+            folder: "silent-sos/evidence",
+            resource_type: resourceType
+        },
+        (error, result) => {
+            if (error) {
+                return reject(error);
+            }
+
+            resolve(result);
+        }
+    );
+
+    stream.end(buffer);
+});
+
+}
 
 // =========================
 // NODEMAILER EMAIL CONFIGURATION

@@ -936,7 +936,7 @@ sendEvidenceButton.addEventListener(
 
             formData.append(
 
-                "evidence",
+                "file",
 
                 currentEvidence.blob,
 
@@ -951,18 +951,23 @@ sendEvidenceButton.addEventListener(
 
                 "userId",
 
-                user.id
+                String(user.id)
 
             );
 
 
-            formData.append(
+            formData.append
 
-                "evidenceType",
+                ("evidenceType",
 
-                currentEvidence.type
+                currentEvidence.type);
 
-            );
+                if(alertId)
+                {formData.append("alert_id",
+                    String(alertId)
+                );}
+
+            
 
 
             /* =========================
@@ -1083,7 +1088,7 @@ sendEvidenceButton.addEventListener(
 
 
             sendStatus.textContent =
-                "Unable to upload evidence.";
+                error.message || "Unable to upload evidence.";
 
 
         } finally {
