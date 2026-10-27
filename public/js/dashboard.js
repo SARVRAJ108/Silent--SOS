@@ -575,9 +575,7 @@ async function sendSOS(latitude, longitude, accuracy) {
             console.log("SOS ACTIVE. Alert ID:", alertId);
 
             alert(
-                "🚨 SOS ACTIVATED!\n\n" +
-                "Emergency contacts have been notified."
-            );
+                "🚨 SOS ACTIVATED!\n\n");
         } else {
             console.error(
                 "SOS activation failed or Alert ID is missing:",
