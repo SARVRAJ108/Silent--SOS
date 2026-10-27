@@ -551,8 +551,9 @@ app.delete("/api/contacts/:id", async (req, res) => {
     }
 });
 
+
 // =========================
-// UPLOAD EVIDENCE
+// UPLOAD EVIDENCE + EMAIL CONTACTS
 // =========================
 
 app.post(
@@ -560,10 +561,34 @@ app.post(
     upload.single("file"),
     async (req, res) => {
         try {
-            const { user_id, alert_id, evidence_type } = req.body;
+            // Accept both frontend and backend naming conventions
+            const userId = Number(
+                req.body.user_id || req.body.userId
+            );
 
-            const userId = Number(user_id);
-            const alertId = alert_id ? Number(alert_id) : null;
+            const rawAlertId =
+                req.body.alert_id || req.body.alertId;
+
+            const alertId = rawAlertId
+                ? Number(rawAlertId)
+                : null;
+
+            const evidenceType =
+                req.body.evidence_type ||
+                req.body.evidenceType;
+
+            let contactIds;
+
+            try {
+                contactIds = JSON.parse(
+                    req.body.contactIds || "[]"
+                );
+            } catch {
+                return res.status(400).json({
+                    success: false,
+                    message: "Invalid contact IDs.",
+                });
+            }
 
             if (
                 !Number.isInteger(userId) ||
@@ -576,8 +601,17 @@ app.post(
                 });
             }
 
+            if (!Array.isArray(contactIds)) {
+                return res.status(400).json({
+                    success: false,
+                    message: "Contact IDs must be an array.",
+                });
+            }
+
             const userResult = await pool.query(
-                "SELECT id FROM users WHERE id = $1",
+                `SELECT id, name, email, mobile
+                 FROM users
+                 WHERE id = $1`,
                 [userId]
             );
 
@@ -588,8 +622,13 @@ app.post(
                 });
             }
 
+            const user = userResult.rows[0];
+
             if (alertId !== null) {
-                if (!Number.isInteger(alertId) || alertId <= 0) {
+                if (
+                    !Number.isInteger(alertId) ||
+                    alertId <= 0
+                ) {
                     return res.status(400).json({
                         success: false,
                         message: "Invalid alert ID.",
@@ -597,7 +636,9 @@ app.post(
                 }
 
                 const alertResult = await pool.query(
-                    "SELECT id FROM sos_alerts WHERE id = $1 AND user_id = $2",
+                    `SELECT id
+                     FROM sos_alerts
+                     WHERE id = $1 AND user_id = $2`,
                     [alertId, userId]
                 );
 
@@ -609,24 +650,26 @@ app.post(
                 }
             }
 
+            // Upload file to Cloudinary
             const cloudResult = await uploadToCloudinary(
                 req.file.buffer,
                 req.file.mimetype
             );
 
-            const type = evidence_type ||
-                (req.file.mimetype.startsWith("image/")
-                    ? "photo"
-                    : 
-                req.file.mimetype.startsWith("video/")
-                        ? "video"
-                        : 
-                req.file.mimetype.startsWith("audio/")
-                             ? "video"
-                             : "file");
+            // Normalize evidence type
+            const type = evidenceType ||
+                (
+                    req.file.mimetype.startsWith("image/")
+                        ? "photo"
+                        : req.file.mimetype.startsWith("video/")
+                            ? "video"
+                            : req.file.mimetype.startsWith("audio/")
+                                ? "audio"
+                                : "file"
+                );
 
-            
-                const result = await pool.query(
+            // Save evidence in PostgreSQL
+            const result = await pool.query(
                 `INSERT INTO evidence
                     (user_id, alert_id, evidence_type, file_path)
                  VALUES ($1, $2, $3, $4)
@@ -639,15 +682,100 @@ app.post(
                 ]
             );
 
-            res.status(201).json({
-                success: true,
-                message: "Evidence uploaded successfully.",
-                evidence: result.rows[0],
-            });
-        } catch (error) {
-            console.error("Evidence upload error:", error);
+            const evidence = result.rows[0];
 
-            res.status(500).json({
+            // Fetch only contacts belonging to this user
+            let contacts = [];
+
+            if (contactIds.length > 0) {
+                const validContactIds = [
+                    ...new Set(
+                        contactIds
+                            .map(Number)
+                            .filter(
+                                id =>
+                                    Number.isInteger(id) &&
+                                    id > 0
+                            )
+                    ),
+                ];
+
+                if (validContactIds.length > 0) {
+                    const contactsResult = await pool.query(
+                        `SELECT id, name, email
+                         FROM contacts
+                         WHERE user_id = $1
+                           AND id = ANY($2::int[])
+                           AND email IS NOT NULL
+                           AND email <> ''`,
+                        [userId, validContactIds]
+                    );
+
+                    contacts = contactsResult.rows;
+                }
+            }
+
+            // Send evidence link by email
+            const emailResults = await Promise.all(
+                contacts.map(async contact => {
+                    const subject =
+                        "Silent SOS - Emergency Evidence Shared";
+
+                    const emailText =
+                        `Hello ${contact.name || "Emergency Contact"},\n\n` +
+                        `${user.name || "A Silent SOS user"} has shared emergency evidence with you.\n\n` +
+                        `Evidence type: ${type}\n` +
+                        `Evidence ID: ${evidence.id}\n` +
+                        `SOS Alert ID: ${alertId || "Not linked"}\n` +
+                        `Evidence link: ${cloudResult.secure_url}\n\n` +
+                        `Please open the link to view the shared evidence.\n\n` +
+                        `This is an automated message from Silent SOS.`;
+
+                    const sent = await sendEmail(
+                        contact.email,
+                        subject,
+                        emailText
+                    );
+
+                    return {
+                        contactId: contact.id,
+                        email: contact.email,
+                        sent,
+                    };
+                })
+            );
+
+            const emailsSent = emailResults.filter(
+                result => result.sent
+            ).length;
+
+            const emailsFailed = emailResults.filter(
+                result => !result.sent
+            ).length;
+
+            console.log("Evidence upload completed:", {
+                evidenceId: evidence.id,
+                contactsSelected: contactIds.length,
+                emailsSent,
+                emailsFailed,
+            });
+
+            return res.status(201).json({
+                success: true,
+                message: "Evidence uploaded and saved.",
+                evidence,
+                emailsSent,
+                emailsFailed,
+                emailResults,
+            });
+
+        } catch (error) {
+            console.error("Evidence upload error:", {
+                message: error.message,
+                code: error.code,
+            });
+
+            return res.status(500).json({
                 success: false,
                 message: "Unable to upload evidence.",
                 error: error.message,

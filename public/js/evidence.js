@@ -937,15 +937,38 @@ formData.append(
     getEvidenceFileName(currentEvidence.type)
 );
 
-formData.append(
-    "user_id",
-    String(user.id)
-);
+formData.append("user_id", String(user.id));
+formData.append("evidence_type", currentEvidence.type);
+
+if (alertId) {
+    formData.append("alert_id", String(alertId));
+}
 
 formData.append(
-    "evidence_type",
-    currentEvidence.type
+    "contactIds",
+    JSON.stringify(selectedContactIds)
 );
+
+const response = await fetch("/api/evidence/upload", {
+    method: "POST",
+    body: formData
+});
+
+const data = await response.json();
+
+if (!response.ok || !data.success) {
+    throw new Error(
+        data.message || "Evidence upload failed."
+    );
+}
+
+sendStatus.textContent =
+    `Evidence saved! ID: ${data.evidence.id}. ` +
+    `Emails sent: ${data.emailsSent}. ` +
+    `Emails failed: ${data.emailsFailed}.`;
+
+await loadSavedEvidence();
+
 
 /* =========================
    ACTIVE SOS ALERT
@@ -971,25 +994,6 @@ formData.append(
             /* =========================
                SEND TO SERVER
             ========================= */
-
-            const response =
-                await fetch(
-
-                    "/api/evidence/upload",
-
-                    {
-
-                        method: "POST",
-
-                        body: formData
-
-                    }
-
-                );
-
-
-            const data =
-                await response.json();
 
 
             if (
