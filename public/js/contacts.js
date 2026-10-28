@@ -1050,9 +1050,8 @@ body: JSON.stringify({
                         body:
                             JSON.stringify({
 
-                                userId:
-                                    user.id
-
+                                user_id:
+                                  loggedInUserId
                             })
 
                     }
@@ -1068,10 +1067,10 @@ body: JSON.stringify({
                 !data.success
             ) {
 
-                alert(
-                    data.message ||
-                    "Unable to delete contact."
+                throw new Error(
+                    data.message || "Contact didn't deleted."
                 );
+               
 
                 return;
 
@@ -1175,7 +1174,7 @@ body: JSON.stringify({
                         body:
                             JSON.stringify({
 
-                                userId:
+                                user_id:
                                     user.id,
 
                                 name:

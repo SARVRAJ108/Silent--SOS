@@ -701,7 +701,12 @@ app.get("/api/evidence/:userId", async (req, res) => {
 app.delete("/api/evidence/:id", async (req, res) => {
     try {
         const evidenceId = Number(req.params.id);
-        const userId = Number(req.body.user_id || req.query.user_id);
+
+        // Support user_id from query string or request body
+        const userId = Number(
+            req.query.user_id ??
+            req.body?.user_id
+        );
 
         if (
             !Number.isInteger(evidenceId) ||
@@ -711,7 +716,7 @@ app.delete("/api/evidence/:id", async (req, res) => {
         ) {
             return res.status(400).json({
                 success: false,
-                message: "Valid evidence ID and user ID are required.",
+                message: "Valid evidence ID and user ID are required."
             });
         }
 
@@ -725,20 +730,27 @@ app.delete("/api/evidence/:id", async (req, res) => {
         if (result.rowCount === 0) {
             return res.status(404).json({
                 success: false,
-                message: "Evidence not found.",
+                message: "Evidence not found for this user."
             });
         }
 
-        res.json({
+        console.log("Evidence deleted successfully:", {
+            evidenceId,
+            userId
+        });
+
+        return res.json({
             success: true,
             message: "Evidence deleted successfully.",
+            evidenceId: result.rows[0].id
         });
+
     } catch (error) {
         console.error("Delete evidence error:", error);
 
-        res.status(500).json({
+        return res.status(500).json({
             success: false,
-            message: "Unable to delete evidence.",
+            message: "Unable to delete evidence."
         });
     }
 });

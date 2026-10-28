@@ -1383,6 +1383,24 @@ async function loadSavedEvidence() {
                         class="saved-evidence-player">
                     </div>
 
+                    <button type = "button" class= "delete-evidence-btn" 
+                    data-id= "${Number(item.id)}"
+
+                    style=" 
+                    background: #dc2626;
+                    color: white;
+                    border: none;
+                    padding: 10px 16px;
+                    border-radius: 8px
+                    cursor: pointer;
+                    margin-top: 12px;
+                    "
+                    >
+
+                    Delete Evidence
+
+                    </button>
+                
                 `;
 
 
@@ -1774,3 +1792,73 @@ if (photoUpload) {
 // INITIAL LOAD
 loadContacts();
 loadSavedEvidence();
+
+
+// =========================
+// DELETE SAVED EVIDENCE
+// =========================
+
+savedEvidenceList.addEventListener("click", async function (event) {
+
+    const deleteButton = event.target.closest(".delete-evidence-btn");
+
+    if (!deleteButton) {
+        return;
+    }
+
+    const evidenceId = Number(deleteButton.dataset.id);
+
+    const savedUser = localStorage.getItem("silentSOSUser");
+
+    if (!savedUser) {
+        alert("Please login first.");
+        window.location.href = "/login.html";
+        return;
+    }
+
+    const user = JSON.parse(savedUser);
+
+    const confirmed = confirm(
+        "Bhai, kya tum sach mein ye evidence delete karna chahte ho?"
+    );
+
+    if (!confirmed) {
+        return;
+    }
+
+    try {
+
+        deleteButton.disabled = true;
+        deleteButton.textContent = "Deleting...";
+
+        const response = await fetch(
+            `/api/evidence/${evidenceId}?user_id=${encodeURIComponent(user.id)}`,
+            {
+                method: "DELETE"
+            }
+        );
+
+        const data = await response.json();
+
+        if (!response.ok || !data.success) {
+            throw new Error(
+                data.message || "Evidence delete nahi ho paya."
+            );
+        }
+
+        alert("Evidence successfully deleted! ✅");
+
+        await loadSavedEvidence();
+
+    } catch (error) {
+
+        console.error("Delete evidence error:", error);
+
+        alert(error.message || "Evidence delete karte waqt error aaya.");
+
+        deleteButton.disabled = false;
+        deleteButton.textContent = "🗑️ Delete Evidence";
+
+    }
+
+});
